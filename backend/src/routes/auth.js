@@ -7,20 +7,6 @@ const isNotAuth = require("../middlewares/isNotAuth");
 const isAuth = require("../middlewares/isAuth");
 const { COOKIE_NAME, isDev } = require("../constants");
 
-router.get("/", isAuth, async (req, res) => {
-  try {
-    const user = await getUserModel()
-      .findById(req.uid)
-      .select("-password")
-      .populate("events")
-      .exec();
-    return res.json({ status: "SUCCESS", data: user });
-  } catch (error) {
-    console.error(error);
-    return res.json({ status: "ERROR", data: { message: error.message } });
-  }
-});
-
 router.post("/register", isNotAuth, async (req, res) => {
   try {
     const user = new (getUserModel())({
@@ -35,10 +21,18 @@ router.post("/register", isNotAuth, async (req, res) => {
     });
 
     for (const _event of req.body.events) {
-      const event = await getEventModel().create(_event);
+      const event = await getEventModel().create({
+        ..._event,
+        planner: user._id,
+      });
       user.events.push(event._id);
     }
 
+    if (user.type === "Planner" && user.events.length === 0) {
+      const error = new Error("planner must contain atleast one event!");
+      error.code = 11001;
+      throw error;
+    }
     await user.save();
 
     const token = jwt.sign({ uid: user._id }, process.env.JWT_SECRET, {
@@ -59,6 +53,12 @@ router.post("/register", isNotAuth, async (req, res) => {
         status: "ERROR",
         data: { name: "username already exists!" },
       });
+    if (error.code === 11001) {
+      return res.json({
+        status: "ERROR",
+        data: { events: error.message },
+      });
+    }
     return res.json({ status: "ERROR", data: { message: error.message } });
   }
 });
@@ -68,7 +68,6 @@ router.post("/login", isNotAuth, async (req, res) => {
     const { name, password } = req.body;
     const user = await getUserModel()
       .findOne({ name })
-      .select("-password")
       .populate("events")
       .exec();
 
@@ -86,6 +85,7 @@ router.post("/login", isNotAuth, async (req, res) => {
       secure: !isDev,
     });
 
+    delete user.password;
     return res.json({ status: "SUCCESS", data: user });
   } catch (error) {
     console.error(error);
