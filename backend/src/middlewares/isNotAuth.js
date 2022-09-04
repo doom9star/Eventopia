@@ -1,13 +1,14 @@
 const { JsonWebTokenError, verify } = require("jsonwebtoken");
+const { COOKIE_NAME } = require("../constants");
 
 module.exports = (req, res, next) => {
   try {
-    const ecid = req.cookies.ecid;
-    if (!ecid) throw new JsonWebTokenError("Token is undefined!");
-    verify(ecid, process.env.JWT_SECRET);
+    const token = req.cookies[COOKIE_NAME];
+    if (!token) throw new JsonWebTokenError("token is undefined!");
+    verify(token, process.env.JWT_SECRET);
     return res.json({
       status: "ERROR",
-      data: { message: "User is authenticated!" },
+      data: { message: "user is authenticated!" },
     });
   } catch (error) {
     next();
