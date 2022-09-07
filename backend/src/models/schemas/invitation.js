@@ -8,8 +8,9 @@ const invitation = new Schema(
     description: { type: String },
     date: { type: Date },
     time: { type: Date },
-    duration: { type: String },
+    duration: { type: Date },
     address: { type: String },
+    read: { type: Boolean },
   },
   { timestamps: true }
 );

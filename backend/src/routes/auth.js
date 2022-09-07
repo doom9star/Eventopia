@@ -14,18 +14,19 @@ router.post("/register", isNotAuth, async (req, res) => {
       password: await bcrypt.hash(req.body.password, 10),
       avatar: req.body.avatar,
       type: req.body.type,
-      countries: req.body.countries,
       states: req.body.states,
       anonymous: req.body.anonymous,
       events: [],
     });
 
-    for (const _event of req.body.events) {
-      const event = await getEventModel().create({
-        ..._event,
-        planner: user._id,
-      });
-      user.events.push(event._id);
+    if (req.body.events) {
+      for (const _event of req.body.events) {
+        const event = await getEventModel().create({
+          ..._event,
+          planner: user._id,
+        });
+        user.events.push(event._id);
+      }
     }
 
     if (user.type === "Planner" && user.events.length === 0) {

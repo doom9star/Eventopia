@@ -3,6 +3,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const path = require("path");
 const cors = require("cors");
+const morgan = require("morgan");
 
 const { connectDB } = require("./models");
 const MainRouter = require("./routes/index");
@@ -21,12 +22,15 @@ const main = async () => {
   app.set("trust proxy", !isDev);
 
   app.use(cors({ origin: [FRONTEND_URL], credentials: true }));
+  app.use(morgan("dev"));
   app.use(cookieParser());
   app.use(express.json());
   app.use("/", MainRouter);
 
   app.listen(process.env.PORT, () => {
-    console.log(`Web-Server has started running on PORT-[${process.env.PORT}]`);
+    console.log(
+      `Web-Server has started running on PORT-[${process.env.PORT}]\n`
+    );
   });
 };
 

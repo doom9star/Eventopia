@@ -2,21 +2,22 @@ const { Schema, SchemaTypes } = require("mongoose");
 
 const order = new Schema(
   {
+    planner: { type: SchemaTypes.ObjectId, ref: "users" },
     customer: { type: SchemaTypes.ObjectId, ref: "users" },
+    event: { type: SchemaTypes.ObjectId, ref: "events" },
     guests: [{ type: SchemaTypes.ObjectId, ref: "users" }],
     status: {
       type: String,
       enum: ["Ordered", "Seen", "Accepted", "Completed", "Rejected"],
     },
     date: { type: Date },
-    state: { type: String },
-    country: { type: String },
-    place: { type: String },
+    time: { type: Date },
+    info: { type: String },
+    duration: { type: Date },
     invite: { type: Boolean },
     contact: { type: Number },
-    start_time: { type: Date },
-    duration: { type: String },
-    additional_info: { type: String },
+    address: { type: String },
+    expiry: { type: Date },
   },
   { timestamps: true }
 );

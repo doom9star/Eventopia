@@ -44,7 +44,10 @@ router.put("/", isAuth, async (req, res) => {
       await getEventModel().deleteOne({ _id: event._id });
     }
 
-    await getUserModel().updateOne(req.uid, { events: event_ids, ...others });
+    await getUserModel().updateOne(
+      { _id: req.uid },
+      { events: event_ids, ...others }
+    );
     const user = await getUserModel()
       .findById(req.uid)
       .select("-password")

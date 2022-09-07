@@ -9,8 +9,7 @@ const user = new Schema(
     type: { type: String, enum: ["Customer", "Planner"] },
     events: [{ type: SchemaTypes.ObjectId, ref: "events" }],
     orders: [{ type: SchemaTypes.ObjectId, ref: "orders" }],
-    countries: [{ type: String }],
-    states: [{ type: String }],
+    states: [{ type: Object }],
     anonymous: { type: Boolean },
   },
   { timestamps: true }
