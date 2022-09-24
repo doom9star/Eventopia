@@ -1,1 +1,1 @@
-# Event Planner
+# Eventopia
