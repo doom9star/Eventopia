@@ -8,6 +8,7 @@ const event = new Schema(
     planner: { type: SchemaTypes.ObjectId, ref: "users" },
     min_price: { type: Number },
     max_price: { type: Number },
+    states: [{ type: String }],
     type: { type: String, enum: ["Online", "Offline"] },
   },
   { timestamps: true }

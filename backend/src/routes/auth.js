@@ -2,7 +2,7 @@ const router = require("express").Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
-const { getUserModel, getEventModel } = require("../models");
+const { getUserModel } = require("../models");
 const isNotAuth = require("../middlewares/isNotAuth");
 const isAuth = require("../middlewares/isAuth");
 const { COOKIE_NAME, isDev } = require("../constants");
@@ -14,26 +14,10 @@ router.post("/register", isNotAuth, async (req, res) => {
       password: await bcrypt.hash(req.body.password, 10),
       avatar: req.body.avatar,
       type: req.body.type,
-      states: req.body.states,
-      anonymous: req.body.anonymous,
+      states: [],
+      anonymous: false,
       events: [],
     });
-
-    if (req.body.events) {
-      for (const _event of req.body.events) {
-        const event = await getEventModel().create({
-          ..._event,
-          planner: user._id,
-        });
-        user.events.push(event._id);
-      }
-    }
-
-    if (user.type === "Planner" && user.events.length === 0) {
-      const error = new Error("planner must contain atleast one event!");
-      error.code = 11001;
-      throw error;
-    }
     await user.save();
 
     const token = jwt.sign({ uid: user._id }, process.env.JWT_SECRET, {
