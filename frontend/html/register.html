@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eventopia</title>
+    <link rel="stylesheet" href="../css/register.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="sub-container">
+        <img src="../images/logo.png" alt="Eventopia-Logo" />
+        <input type="text" placeholder="Name" autofocus />
+        <input type="password" placeholder="Password" />
+        <input type="password" placeholder="Confirm Password" />
+        <div class="radio-container">
+          <div class="radio">
+            <input
+              type="radio"
+              id="customer"
+              name="type"
+              value="customer"
+              checked
+            />
+            <label for="customer">Customer</label>
+          </div>
+          <div class="radio">
+            <input type="radio" id="planner" name="type" value="planner" />
+            <label for="planner">Planner</label>
+          </div>
+        </div>
+        <button class="btn">Register</button>
+      </div>
+    </div>
+  </body>
+</html>
