@@ -1,0 +1,64 @@
+* {
+  font-family: cursive;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  --dark-color: rgb(100, 100, 100);
+  --light-color: rgb(200, 200, 200);
+  --prim-color: #5065a8;
+}
+
+.btn {
+  cursor: pointer;
+  font-size: 12px;
+  font-family: monospace;
+  padding: 10px 20px;
+  text-decoration: none;
+  border: none;
+}
+
+.btn-filled {
+  background-color: var(--prim-color);
+  color: white;
+}
+
+.btn-outlined {
+  border: 1px solid var(--prim-color);
+  background-color: white;
+  color: var(--prim-color);
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"],
+textarea {
+  width: 90%;
+  outline: none;
+  padding: 10px 20px;
+  margin-bottom: 12px;
+  border: 1px solid var(--light-color);
+}
+
+.radio-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 16px 0px 32px 0px;
+  justify-content: space-evenly;
+}
+
+.radio {
+  display: flex;
+  font-size: 12px;
+}
+
+label {
+  margin-left: 10px;
+  font-size: 12px;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

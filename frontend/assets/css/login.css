@@ -16,20 +16,11 @@
   align-items: center;
 }
 
-input {
-  width: 90%;
-  outline: none;
-  padding: 10px 20px;
-  margin-bottom: 12px;
-  border: 1px solid var(--light-color);
-}
-
 button {
-  color: white;
-  background-color: var(--prim-color);
   margin-top: 16px;
+  align-self: flex-start;
 }
 
 img {
-  width: 50%;
+  width: 200px;
 }

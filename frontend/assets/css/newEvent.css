@@ -1,0 +1,27 @@
+@import url("./common.css");
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.sub-container-1 {
+  padding: 5%;
+  display: flex;
+  align-items: center;
+}
+
+.sub-container-2 {
+  width: 40%;
+  align-self: center;
+}
+
+.sub-container-3 {
+  display: flex;
+}
+
+.create-btn {
+  margin-top: 16px;
+}

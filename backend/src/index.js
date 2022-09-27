@@ -14,14 +14,10 @@ const main = async () => {
 
   await connectDB();
 
-  const FRONTEND_URL = isDev
-    ? `http://localhost:${process.env.PORT}`
-    : process.env.FRONTEND;
-
   const app = express();
   app.set("trust proxy", !isDev);
 
-  app.use(cors({ origin: [FRONTEND_URL], credentials: true }));
+  app.use(cors({ origin: [process.env.FRONTEND], credentials: true }));
   app.use(morgan("dev"));
   app.use(cookieParser());
   app.use(express.json());

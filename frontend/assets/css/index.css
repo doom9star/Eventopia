@@ -19,13 +19,5 @@ img {
 }
 
 .login-btn {
-  border: 1px solid var(--prim-color);
-  background-color: white;
-  color: var(--prim-color);
   margin-right: 10px;
-}
-
-.register-btn {
-  background-color: var(--prim-color);
-  color: white;
 }
