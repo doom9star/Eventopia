@@ -17,7 +17,12 @@ const main = async () => {
   const app = express();
   app.set("trust proxy", !isDev);
 
-  app.use(cors({ origin: [process.env.FRONTEND], credentials: true }));
+  app.use(
+    cors({
+      origin: [process.env.FRONTEND, "https://doom9star.github.io"],
+      credentials: true,
+    })
+  );
   app.use(morgan("dev"));
   app.use(cookieParser());
   app.use(express.json());

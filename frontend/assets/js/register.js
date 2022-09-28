@@ -3,11 +3,11 @@ const mainContainer = document.querySelector(".container");
 window.onload = async () => {
   const data = await getUser();
   if (data.status === "SUCCESS") {
-    window.location.replace("/frontend/home.html" + "?type=" + data.data.type);
+    window.location.replace("home.html" + "?type=" + data.data.type);
   } else {
     mainContainer.innerHTML = `
       <div class="sub-container">
-        <a href="/frontend/index.html"><img src="./assets/images/logo.png" alt="Eventopia-Logo" /></a>
+        <a href="index.html"><img src="./assets/images/logo.png" alt="Eventopia-Logo" /></a>
         <input type="text" placeholder="Name" autofocus />
         <div class="radio-container">
           <div class="radio">
@@ -41,9 +41,7 @@ window.onload = async () => {
       type: document.querySelector('input[name="type"]:checked').value,
     }).then((data) => {
       if (data.status === "SUCCESS") {
-        window.location.replace(
-          "/frontend/home.html" + "?type=" + data.data.type
-        );
+        window.location.replace("home.html" + "?type=" + data.data.type);
       }
     });
   });
