@@ -8,7 +8,27 @@ router.get("/:id?", isAuth, async (req, res) => {
     const user = await getUserModel()
       .findById(req.query.id ? req.query.id : req.uid)
       .select("-password")
-      .populate("events")
+      .populate({
+        path: "orders",
+        populate: [
+          {
+            path: "event",
+          },
+          {
+            path: "customer",
+          },
+        ],
+        select: "event customer createdAt",
+      })
+      .populate({
+        path: "events",
+        populate: [
+          {
+            path: "planner",
+          },
+        ],
+        select: "name images min_price planner",
+      })
       .exec();
     return res.json({ status: "SUCCESS", data: user });
   } catch (error) {

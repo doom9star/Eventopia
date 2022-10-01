@@ -2,8 +2,10 @@ const mainContainer = document.querySelector(".container");
 
 window.onload = async () => {
   const data = await getUser();
-  if (data.status === "SUCCESS") {
-    window.location.replace("home.html" + "?type=" + data.data.type);
+  if (data.status === "ERROR") {
+    window.location.replace(
+      "home.html" + data.data.type === "Planner" ? "?tab=orders" : ""
+    );
   } else {
     mainContainer.innerHTML = `
       <div class="sub-container">
@@ -41,7 +43,9 @@ window.onload = async () => {
       type: document.querySelector('input[name="type"]:checked').value,
     }).then((data) => {
       if (data.status === "SUCCESS") {
-        window.location.replace("home.html" + "?type=" + data.data.type);
+        window.location.replace(
+          "home.html" + data.data.type === "Planner" ? "?tab=orders" : ""
+        );
       }
     });
   });

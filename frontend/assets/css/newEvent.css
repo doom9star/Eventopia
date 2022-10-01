@@ -18,10 +18,14 @@
   align-self: center;
 }
 
-.sub-container-3 {
+.sub-container-21 {
   display: flex;
 }
 
 .create-btn {
-  margin-top: 16px;
+  margin: 16px 0px;
+}
+
+.back-btn {
+  font-size: 16px;
 }

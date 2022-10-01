@@ -1,7 +1,11 @@
 const router = require("express").Router();
 
 const isAuth = require("../middlewares/isAuth");
-const { getOrderModel, getInvitationModel } = require("../models");
+const {
+  getOrderModel,
+  getInvitationModel,
+  getUserModel,
+} = require("../models");
 
 router.get("/:type?", isAuth, async (req, res) => {
   try {
@@ -32,6 +36,10 @@ router.post("/", isAuth, async (req, res) => {
       customer: req.uid,
       status: "Ordered",
     });
+    await getUserModel().updateOne(
+      { _id: req.uid },
+      { $addToSet: { orders: [order._id] } }
+    );
     return res.json({ status: "SUCCESS", data: order });
   } catch (error) {
     console.error(error);
