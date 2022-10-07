@@ -2,9 +2,9 @@ const mainContainer = document.querySelector(".container");
 
 window.onload = async () => {
   const data = await getUser();
-  if (data.status === "ERROR") {
+  if (data.status === "SUCCESS") {
     window.location.replace(
-      "home.html" + data.data.type === "Planner" ? "?tab=orders" : ""
+      "home.html?tab=" + data.data.type === "Customer" ? "events" : "orders"
     );
   } else {
     mainContainer.innerHTML = `
@@ -17,13 +17,13 @@ window.onload = async () => {
               type="radio"
               id="customer"
               name="type"
-              value="customer"
+              value="Customer"
               checked
             />
             <label for="customer">Customer</label>
           </div>
           <div class="radio">
-            <input type="radio" id="planner" name="type" value="planner" />
+            <input type="radio" id="planner" name="type" value="Planner" />
             <label for="planner">Planner</label>
           </div>
         </div>
@@ -44,7 +44,7 @@ window.onload = async () => {
     }).then((data) => {
       if (data.status === "SUCCESS") {
         window.location.replace(
-          "home.html" + data.data.type === "Planner" ? "?tab=orders" : ""
+          "home.html?tab=" + data.data.type === "Customer" ? "events" : "orders"
         );
       }
     });

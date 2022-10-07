@@ -1,0 +1,93 @@
+@import url("./common.css");
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin-top: 100px;
+}
+
+.sub-container-1 {
+  margin: 0px 50px;
+}
+
+.sub-container-2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90%;
+}
+
+.sub-container-21 {
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sub-container-21 img {
+  width: 80%;
+  border: 1px solid var(--light-color);
+}
+
+.sub-container-22 {
+  width: 50%;
+  color: var(--dark-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.sub-container-221 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.event-name {
+  font-size: 25px;
+}
+
+.event-type {
+  font-size: 10px;
+  border: 1px solid var(--light-color);
+  border-radius: 10px;
+  padding: 2px 8px;
+}
+
+.event-planner-name {
+  margin: 5px 0px 20px 0px;
+  opacity: 0.7;
+  font-size: 15px;
+}
+
+.event-description {
+  font-size: 14px;
+  margin-bottom: 8px;
+  white-space: pre-wrap;
+}
+
+.sub-container-222 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 150px));
+  grid-gap: 16px;
+  margin: 8px 0px;
+}
+
+.sub-container-222 > span {
+  border: 1px solid var(--light-color);
+  border-radius: 10px;
+  font-size: 12px;
+  text-align: center;
+  padding: 4px 0px;
+}
+
+.sub-container-223 {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.event-price {
+  margin-right: 20px;
+}

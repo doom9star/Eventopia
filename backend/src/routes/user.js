@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const { getUserModel } = require("../models");
+const { getUserModel, getEventModel, getOrderModel } = require("../models");
 const isAuth = require("../middlewares/isAuth");
 
 router.get("/:id?", isAuth, async (req, res) => {
@@ -18,7 +18,7 @@ router.get("/:id?", isAuth, async (req, res) => {
             path: "customer",
           },
         ],
-        select: "event customer createdAt",
+        select: "event customer createdAt status",
       })
       .populate({
         path: "events",
@@ -30,6 +30,21 @@ router.get("/:id?", isAuth, async (req, res) => {
         select: "name images min_price planner",
       })
       .exec();
+
+    if (user.type === "Customer") {
+      user.events = await getEventModel()
+        .find()
+        .populate("planner")
+        .select("name images min_price planner")
+        .exec();
+      user.orders = await getOrderModel()
+        .find({ customer: user._id })
+        .populate("event")
+        .populate("planner")
+        .select("event planner createdAt status")
+        .exec();
+    }
+
     return res.json({ status: "SUCCESS", data: user });
   } catch (error) {
     console.error(error);

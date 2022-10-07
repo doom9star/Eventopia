@@ -5,7 +5,10 @@ const { getEventModel, getUserModel } = require("../models");
 
 router.get("/:id", isAuth, async (req, res) => {
   try {
-    const event = await getEventModel().findOne({ _id: req.params.id }).exec();
+    const event = await getEventModel()
+      .findOne({ _id: req.params.id })
+      .populate("planner")
+      .exec();
     return res.json({ status: "SUCCESS", data: event });
   } catch (error) {
     console.error(error);
@@ -41,7 +44,7 @@ router.put("/", isAuth, async (req, res) => {
   }
 });
 
-router.delete("/id", isAuth, async (req, res) => {
+router.delete("/:id", isAuth, async (req, res) => {
   try {
     await getEventModel().deleteOne({ _id: req.params.id });
     return res.json({ status: "SUCCESS", data: null });

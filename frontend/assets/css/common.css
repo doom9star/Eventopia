@@ -17,6 +17,7 @@ body {
   padding: 10px 20px;
   text-decoration: none;
   border: none;
+  outline: none;
 }
 
 .btn-filled {
@@ -62,6 +63,19 @@ textarea {
 label {
   margin-left: 10px;
   font-size: 12px;
+}
+
+.tab {
+  margin-right: 48px;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--dark-color);
+  text-decoration: none;
+}
+
+.active-tab {
+  text-decoration: underline;
+  font-weight: bold;
 }
 
 ::-webkit-scrollbar {

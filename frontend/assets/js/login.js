@@ -2,9 +2,9 @@ const mainContainer = document.querySelector(".container");
 
 window.onload = async () => {
   const data = await getUser();
-  if (data.status === "ERROR") {
+  if (data.status === "SUCCESS") {
     window.location.replace(
-      "home.html" + data.data.type === "Planner" ? "?tab=orders" : ""
+      "home.html?tab=" + (data.data.type === "Customer" ? "events" : "orders")
     );
   } else {
     mainContainer.innerHTML = `
@@ -27,7 +27,8 @@ window.onload = async () => {
     }).then((data) => {
       if (data.status === "SUCCESS") {
         window.location.replace(
-          "home.html" + data.data.type === "Planner" ? "?tab=orders" : ""
+          "home.html?tab=" +
+            (data.data.type === "Customer" ? "events" : "orders")
         );
       }
     });

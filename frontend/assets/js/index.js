@@ -4,7 +4,9 @@ window.onload = async () => {
   const data = await getUser();
   if (data.status === "SUCCESS") {
     subContainer2.innerHTML = `
-    <a class="btn btn-filled home-btn" href="home.html">Home</a>
+    <a class="btn btn-filled home-btn" href="home.html?tab=${
+      data.data.type === "Customer" ? "events" : "orders"
+    }">Home</a>
 	`;
   } else {
     subContainer2.innerHTML = `
