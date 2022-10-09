@@ -11,13 +11,16 @@ const order = new Schema(
       enum: ["Ordered", "Seen", "Accepted", "Completed", "Rejected"],
     },
     date: { type: Date },
-    time: { type: Date },
-    info: { type: String },
-    duration: { type: Date },
-    invite: { type: Boolean },
+    start_time: { type: Date },
+    end_time: { type: Date },
+    state: { type: String },
+    place: { type: String },
     contact: { type: Number },
-    address: { type: String },
-    expiry: { type: Date },
+    info: { type: String },
+    invite: {
+      type: String,
+      enum: ["Refused", "Pending", "Sent"],
+    },
   },
   { timestamps: true }
 );

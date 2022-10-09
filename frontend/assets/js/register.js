@@ -1,10 +1,10 @@
 const mainContainer = document.querySelector(".container");
 
 window.onload = async () => {
-  const data = await getUser();
-  if (data.status === "SUCCESS") {
+  const res = await getUser();
+  if (res.status === "SUCCESS") {
     window.location.replace(
-      "home.html?tab=" + data.data.type === "Customer" ? "events" : "orders"
+      "home.html?tab=" + res.data.type === "Customer" ? "events" : "orders"
     );
   } else {
     mainContainer.innerHTML = `
@@ -41,10 +41,10 @@ window.onload = async () => {
       name: document.querySelector('input[type="text"]').value,
       password: document.querySelector('input[type="password"]').value,
       type: document.querySelector('input[name="type"]:checked').value,
-    }).then((data) => {
-      if (data.status === "SUCCESS") {
+    }).then((res) => {
+      if (res.status === "SUCCESS") {
         window.location.replace(
-          "home.html?tab=" + data.data.type === "Customer" ? "events" : "orders"
+          "home.html?tab=" + res.data.type === "Customer" ? "events" : "orders"
         );
       }
     });

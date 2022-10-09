@@ -1,10 +1,10 @@
 const mainContainer = document.querySelector(".container");
 
 window.onload = async () => {
-  const data = await getUser();
-  if (data.status === "SUCCESS") {
+  const res = await getUser();
+  if (res.status === "SUCCESS") {
     window.location.replace(
-      "home.html?tab=" + (data.data.type === "Customer" ? "events" : "orders")
+      "home.html?tab=" + (res.data.type === "Customer" ? "events" : "orders")
     );
   } else {
     mainContainer.innerHTML = `
@@ -24,11 +24,11 @@ window.onload = async () => {
     simpleFetch("/auth/login", "POST", {
       name: inputBoxes[0].value,
       password: inputBoxes[1].value,
-    }).then((data) => {
-      if (data.status === "SUCCESS") {
+    }).then((res) => {
+      if (res.status === "SUCCESS") {
         window.location.replace(
           "home.html?tab=" +
-            (data.data.type === "Customer" ? "events" : "orders")
+            (res.data.type === "Customer" ? "events" : "orders")
         );
       }
     });

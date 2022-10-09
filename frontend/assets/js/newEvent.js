@@ -1,10 +1,10 @@
 const container = document.querySelector(".container");
 
 window.onload = async () => {
-  const data = await getUser();
-  if (data.status === "ERROR") {
+  const res = await getUser();
+  if (res.status === "ERROR") {
     window.location.replace("login.html");
-  } else if (data.data.type === "Customer") {
+  } else if (res.data.type === "Customer") {
     window.location.replace("home.html");
   } else {
     container.innerHTML = `
@@ -96,10 +96,9 @@ window.onload = async () => {
         }
       ),
     };
-    simpleFetch("/event", "POST", body).then((data) => {
-      if (data.status === "SUCCESS") {
-        window.location.href =
-          "/frontend/home.html" + "?type=" + data.data.type;
+    simpleFetch("/event", "POST", body).then((res) => {
+      if (res.status === "SUCCESS") {
+        window.location.href = "/frontend/home.html" + "?type=" + res.data.type;
       }
     });
   });

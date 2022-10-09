@@ -22,7 +22,6 @@
 
 .profile-name {
   margin-right: 32px;
-  color: var(--dark-color);
 }
 
 .profile-image {
@@ -49,38 +48,44 @@
   align-items: center;
 }
 
-.sub-container-orders {
+.order-container-header,
+.invitation-container-header {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px 30%;
+  font-size: 10px;
+  background-color: rgb(250, 250, 250);
   margin-top: 32px;
 }
 
-.order-container {
+.order-container,
+.invitation-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   border: 1px solid rgb(240, 240, 240);
   padding: 32px;
   margin-bottom: 16px;
-  color: var(--dark-color);
   cursor: pointer;
   font-size: 12px;
   text-decoration: none;
 }
 
-.order-container:hover {
+.order-container:hover,
+.invitation-container:hover {
   background-color: rgb(250, 250, 250);
 }
 
-.order-sub-container {
+.order-sub-container,
+.invitation-sub-container {
   display: flex;
   align-items: center;
 }
 
-.order-event-thumbnail {
+.order-event-thumbnail,
+.invitation-event-thumbnail {
   width: 100px;
   margin-right: 16px;
-  border: 1px solid rgb(240, 240, 240);
 }
 
 .order-status {
@@ -88,31 +93,6 @@
   border-radius: 10px;
   padding: 4px 10px;
   font-size: 10px;
-}
-
-.order-ordered {
-  background-color: orange;
-  color: white;
-}
-
-.order-seen {
-  background-color: brown;
-  color: white;
-}
-
-.order-accepted {
-  background-color: green;
-  color: white;
-}
-
-.order-completed {
-  background-color: var(--prim-color);
-  color: white;
-}
-
-.order-rejected {
-  background-color: red;
-  color: white;
 }
 
 .sub-container-events {
@@ -123,16 +103,10 @@
   justify-content: center;
 }
 
-.order-accepted {
-  background-color: green;
-  color: white;
-}
-
 .event-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: var(--dark-color);
   font-size: 12px;
   padding: 32px;
   border: 1px solid rgb(240, 240, 240);
@@ -159,5 +133,4 @@
 
 .event-thumbnail {
   width: 100%;
-  border: 1px solid rgb(240, 240, 240);
 }

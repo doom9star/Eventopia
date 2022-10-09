@@ -2,18 +2,18 @@ const container = document.querySelector(".container");
 const params = new URLSearchParams(window.location.search);
 
 window.onload = async () => {
-  const user = await getUser();
-  if (user.status === "ERROR") {
+  const res = await getUser();
+  if (res.status === "ERROR") {
     window.location.replace("login.html");
   } else {
     const event = await simpleFetch("/event/" + params.get("id"), "GET");
-    const isCustomer = user.data.type === "Customer";
+    const isCustomer = res.data.type === "Customer";
 
     container.innerHTML = `
       <div class="sub-container-1">
         <a
           class="btn btn-outlined btn-icon"
-          href="/frontend/home.html?tab=${isCustomer ? "events" : "orders"}"
+          href="/frontend/home.html?tab=events"
           ><</a
         >
       </div>

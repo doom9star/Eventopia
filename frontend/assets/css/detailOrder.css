@@ -1,0 +1,101 @@
+@import url("./common.css");
+
+.container {
+  width: 100vw;
+  height: 100vh;
+}
+
+.sub-container-1,
+.sub-container-2 {
+  width: 80%;
+  margin: auto;
+  padding-top: 64px;
+}
+
+.sub-container-2 > div:not(:first-child) {
+  width: 80%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.sub-container-2 > div:not(:first-child) > * {
+  width: 50%;
+}
+
+.sub-container-2 > div:first-child {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 64px;
+}
+
+.sub-container-2 > div:last-child {
+  padding-bottom: 64px;
+}
+
+.sub-container-2 > div:not(:first-child) > span:last-child {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.sub-container-211 {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-event-name {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.order-id {
+  opacity: 0.5;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.sub-container-212 > span {
+  border: 1px solid var(--light-color);
+  border-radius: 10px;
+  font-size: 10px;
+  text-align: center;
+  padding: 4px 16px;
+  cursor: pointer;
+}
+
+.user-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--light-color);
+  border-radius: 100px;
+  padding: 5px 30px 5px 10px;
+}
+
+.user-container img {
+  width: 50px;
+  border-radius: 100%;
+  margin-right: 10px;
+}
+
+.user-container span {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.sub-container-291 {
+  display: flex;
+  align-items: center;
+}
+
+.sub-container-2911 {
+  width: 80%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 150px));
+  grid-gap: 16px;
+  justify-content: center;
+}

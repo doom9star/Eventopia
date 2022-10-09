@@ -1,5 +1,6 @@
 * {
   font-family: cursive;
+  color: var(--dark-color);
 }
 
 body {
@@ -76,6 +77,31 @@ label {
 .active-tab {
   text-decoration: underline;
   font-weight: bold;
+}
+
+.order-ordered {
+  background-color: orange;
+  color: white;
+}
+
+.order-seen {
+  background-color: brown;
+  color: white;
+}
+
+.order-accepted {
+  background-color: green;
+  color: white;
+}
+
+.order-completed {
+  background-color: var(--prim-color);
+  color: white;
+}
+
+.order-rejected {
+  background-color: red;
+  color: white;
 }
 
 ::-webkit-scrollbar {

@@ -1,6 +1,11 @@
 const router = require("express").Router();
 
-const { getUserModel, getEventModel, getOrderModel } = require("../models");
+const {
+  getUserModel,
+  getEventModel,
+  getOrderModel,
+  getInvitationModel,
+} = require("../models");
 const isAuth = require("../middlewares/isAuth");
 
 router.get("/:id?", isAuth, async (req, res) => {
@@ -28,6 +33,17 @@ router.get("/:id?", isAuth, async (req, res) => {
           },
         ],
         select: "name images min_price planner",
+      })
+      .populate({
+        path: "invitations",
+        populate: [
+          {
+            path: "inviter",
+          },
+          {
+            path: "event",
+          },
+        ],
       })
       .exec();
 

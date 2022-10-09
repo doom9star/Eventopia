@@ -28,12 +28,10 @@
 
 .sub-container-21 img {
   width: 80%;
-  border: 1px solid var(--light-color);
 }
 
 .sub-container-22 {
   width: 50%;
-  color: var(--dark-color);
   display: flex;
   flex-direction: column;
 }

@@ -2,11 +2,13 @@ const container = document.querySelector(".container");
 const params = new URLSearchParams(window.location.search);
 
 window.onload = async () => {
-  const data = await getUser();
-  if (data.status === "ERROR") {
+  const res = await getUser();
+  if (res.status === "ERROR") {
     window.location.replace("login.html");
     return;
   }
+
+  const tab = params.get("tab");
 
   const header = `
       <div class="sub-container-1">
@@ -14,20 +16,20 @@ window.onload = async () => {
         <div class="sub-container-11">
           <img
             src=${
-              data.data.avatar
-                ? data.data.avatar
+              res.data.avatar
+                ? res.data.avatar
                 : "./assets/images/noProfile.jpg"
             }
             alt="Profile-Image"
             class="profile-image"
           />
-          <span class="profile-name">@${data.data.name}</span>
+          <span class="profile-name">@${res.data.name}</span>
           <button class="btn btn-outlined logout-btn">Logout</button>
         </div>
       </div>
   `;
 
-  const events = data.data.events
+  const events = res.data.events
     .map(
       (e) =>
         `
@@ -47,17 +49,16 @@ window.onload = async () => {
     )
     .join("");
 
-  const tab = params.get("tab");
-
-  const orders = data.data.orders
+  const orders = res.data.orders
     .map(
       (o) =>
         `
       <a class="order-container" href="${
-        data.data.type === "Planner"
+        res.data.type === "Planner"
           ? `detailOrder.html?id=${o._id}`
           : "javascript:;"
       }">
+            <span class="order-id">${o._id}</span>
             <div class="order-sub-container">
               <img
                 src="./assets/images/noThumbnail.png"
@@ -74,12 +75,36 @@ window.onload = async () => {
             ).toLocaleDateString()} <span style="font-size: 20px;"> | </span> ${new Date(
           o.createdAt
         ).toLocaleTimeString()}</span>
-            <span class="order-id">${o._id}</span>
             <span class="order-status order-${o.status.toLowerCase()}">${
           o.status
         }</span>
       </a>
      `
+    )
+    .join("");
+
+  const invitations = res.data.invitations
+    .map(
+      (i) =>
+        `
+      <a class="invitation-container" href="javascript:;">
+            <span class="invitation-id">${i._id}</span>
+            <div class="invitation-sub-container">
+              <img
+                src="./assets/images/noThumbnail.png"
+                alt="Invitation-Thumbnail"
+                class="invitation-event-thumbnail"
+              />
+              <span class="invitation-event-name">${i.event.name}</span>
+            </div>
+            <span class="invitation-sender">@${i.inviter.name}</span>
+            <span class="order-timestamp">${new Date(
+              i.createdAt
+            ).toLocaleDateString()} <span style="font-size: 20px;"> | </span> ${new Date(
+          i.createdAt
+        ).toLocaleTimeString()}</span>
+      </a>
+    `
     )
     .join("");
 
@@ -89,9 +114,7 @@ window.onload = async () => {
         <div class="sub-container-21">
           <div class="sub-container-211">
             <a
-              class="tab order-tab ${
-                params.get("tab") === "orders" && "active-tab"
-              }"
+              class="tab order-tab ${tab === "orders" && "active-tab"}"
               href="/frontend/home.html?tab=orders"
               >Orders</a
             >
@@ -100,9 +123,14 @@ window.onload = async () => {
             }" href="/frontend/home.html?tab=events"
               >Events</a
             >
+            <a class="tab invitation-tab ${
+              tab === "invitations" && "active-tab"
+            }" href="/frontend/home.html?tab=invitations"
+              >Invitations</a
+            >
           </div>
           ${
-            data.data.type === "Planner"
+            res.data.type === "Planner"
               ? `
           <a class="btn btn-filled" href="/frontend/newEvent.html"
             >+ New Event</a
@@ -112,20 +140,56 @@ window.onload = async () => {
           }
         </div>
 
+          ${
+            tab === "orders"
+              ? `
         <div class="sub-container-orders">
-          ${tab === "orders" ? orders : ""}
+          <div class="order-container-header">
+            <span>Order ID</span>
+            <span>Event</span>
+            <span>Planner</span>
+            <span>Date/Time</span>
+            <span>Status</span>
+          </div>
+          ${orders}
         </div>
+          `
+              : ""
+          }
 
+          ${
+            tab === "events"
+              ? `
         <div class="sub-container-events">
-          ${tab === "events" ? events : ""}
+          ${events}
         </div>
+          `
+              : ""
+          }
+
+          ${
+            tab === "invitations"
+              ? `
+        <div class="sub-container-invitations">
+          <div class="invitation-container-header">
+            <span>Invitation ID</span>
+            <span>Event</span>
+            <span>Inviter</span>
+            <span>Date/Time</span>
+          </div>
+        </div>
+          ${invitations}
+          `
+              : ""
+          }
+
       </div>
     `;
 
   const btnLogout = document.querySelector(".logout-btn");
   btnLogout.addEventListener("click", () => {
-    simpleFetch("/auth/logout", "DELETE").then((data) => {
-      if (data.status === "SUCCESS") {
+    simpleFetch("/auth/logout", "DELETE").then((res) => {
+      if (res.status === "SUCCESS") {
         window.location.replace("index.html");
       }
     });

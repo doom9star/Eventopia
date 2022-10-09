@@ -5,6 +5,7 @@ const user = new Schema(
     name: { type: String, unique: true },
     password: { type: String },
     avatar: { type: String },
+    invitations: [{ type: SchemaTypes.ObjectId, ref: "invitations" }],
     // Planner Specifics
     type: { type: String, enum: ["Customer", "Planner"] },
     events: [{ type: SchemaTypes.ObjectId, ref: "events" }],
