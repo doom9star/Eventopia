@@ -34,7 +34,11 @@ window.onload = async () => {
           </div>
           <div class="sub-container-223">
             <span class="event-price">₹ ${event.data.min_price.toLocaleString()} - ₹ ${event.data.max_price.toLocaleString()}</span>
-            <button class="btn btn-filled">Order</button>
+            ${
+              res.data.type === `Customer`
+                ? `<button class="btn btn-filled">Order</button>`
+                : ``
+            }
           </div>
         </div>
       </div>

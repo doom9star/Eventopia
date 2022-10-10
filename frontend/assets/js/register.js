@@ -44,7 +44,8 @@ window.onload = async () => {
     }).then((res) => {
       if (res.status === "SUCCESS") {
         window.location.replace(
-          "home.html?tab=" + res.data.type === "Customer" ? "events" : "orders"
+          "home.html?tab=" +
+            (res.data.type === "Customer" ? "events" : "orders")
         );
       }
     });
