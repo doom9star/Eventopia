@@ -7,13 +7,12 @@ window.onload = async () => {
     window.location.replace("login.html");
   } else {
     const event = await simpleFetch("/event/" + params.get("id"), "GET");
-    const isCustomer = res.data.type === "Customer";
 
     container.innerHTML = `
       <div class="sub-container-1">
         <a
           class="btn btn-outlined btn-icon"
-          href="/frontend/home.html?tab=events"
+          href="javascript:history.back()"
           ><</a
         >
       </div>
@@ -33,10 +32,10 @@ window.onload = async () => {
             ${event.data.states.map((s) => `<span>${s}</span>`).join("")}
           </div>
           <div class="sub-container-223">
-            <span class="event-price">₹ ${event.data.min_price.toLocaleString()} - ₹ ${event.data.max_price.toLocaleString()}</span>
+            <span class="event-price">₹ ${event.data.price.toLocaleString()}</span>
             ${
               res.data.type === `Customer`
-                ? `<button class="btn btn-filled">Order</button>`
+                ? `<a class="btn btn-filled" href="newOrder.html?id=${event.data._id}">Order</a>`
                 : ``
             }
           </div>

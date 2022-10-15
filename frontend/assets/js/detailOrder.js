@@ -11,11 +11,89 @@ window.onload = async () => {
       "GET"
     );
 
+    function updateDOMStatus() {
+      document.querySelector(".sub-container-212").innerHTML = `
+        ${
+          ["Ordered", "Seen", "Accepted"].includes(order.status)
+            ? `
+        <span class="status accepted ${
+          order.status === "Accepted" && "order-accepted"
+        }" data-name="Accepted">${
+                order.status === "Accepted" ? "Accepted" : "Accept"
+              }</span>
+        `
+            : ""
+        }
+        ${
+          ["Accepted", "Completed"].includes(order.status)
+            ? `
+        <span class="status completed ${
+          order.status === "Completed" && "order-completed"
+        }" data-name="Completed">Completed</span>
+        `
+            : ""
+        }
+        ${
+          ["Ordered", "Seen", "Rejected"].includes(order.status)
+            ? `
+        <span class="status rejected ${
+          order.status === "Rejected" && "order-rejected"
+        }" data-name="Rejected">${
+                order.status === "Rejected" ? "Rejected" : "Reject"
+              }</span>
+        `
+            : ""
+        }
+  `;
+      document.querySelectorAll(".status").forEach((element) => {
+        element.addEventListener("click", async () => {
+          const status = element.dataset.name;
+          if (status !== order.status) {
+            simpleFetch("/order/" + params.get("id"), "PUT", {
+              status,
+            }).then((res) => {
+              if (res.status === "SUCCESS") {
+                order.status = status;
+                updateDOMStatus();
+              }
+            });
+          }
+        });
+      });
+
+      if (order.invite === "Pending") {
+        if (order.status === "Accepted") {
+          document.querySelector(".sub-container-291").innerHTML += `
+          <button class="btn btn-outlined invite-btn" style="margin-left: 32px">
+            Invite
+          </button>
+        `;
+          document
+            .querySelector(".invite-btn")
+            .addEventListener("click", () => {
+              simpleFetch("/invitation", "POST", { oid: order._id }).then(
+                (data) => {
+                  if (data.status === "SUCCESS") {
+                    order.invite = "Sent";
+                    updateDOMStatus();
+                  }
+                }
+              );
+            });
+        }
+      } else if (order.invite === "Sent") {
+        document.querySelector(".invite-btn")?.remove();
+        document.querySelector(
+          ".sub-container-291"
+        ).innerHTML += `<span style="font-size: 12px; color: green; font-weight: bold">&check; &nbsp;Invited</span>`;
+      }
+    }
+
     container.innerHTML = `
       <div class="sub-container-1">
         <a
           class="btn btn-outlined btn-icon"
-          href="/frontend/home.html?tab=orders"
+          href="javascript:history.back()"
           ><</a
         >
       </div>
@@ -25,17 +103,7 @@ window.onload = async () => {
             <span class="order-event-name">${order.event.name}</span>
             <span class="order-id">${order._id}</span>
           </div>
-          <div class="sub-container-212">
-            <span class="status accepted ${
-              order.status === "Accepted" && "order-accepted"
-            }">Accepted</span>
-            <span class="status completed ${
-              order.status === "Completed" && "order-completed"
-            }">Completed</span>
-            <span class="status rejected ${
-              order.status === "Rejected" && "order-rejected"
-            }">Rejected</span>
-          </div>
+          <div class="sub-container-212"></div>
         </div>
         <div class="sub-container-22">
           <span>Customer</span>
@@ -46,23 +114,19 @@ window.onload = async () => {
         </div>
         <div class="sub-container-23">
           <span>Date</span>
-          <span>${new Date(order.date).toLocaleDateString()}</span>
+          <span>${order.date}</span>
         </div>
         <div class="sub-container-24">
           <span>Time</span>
-          <span>${new Date(
-            order.start_time
-          ).toLocaleTimeString()} &nbsp;-&nbsp; ${new Date(
-      order.end_time
-    ).toLocaleTimeString()}</span>
+          <span>${order.start_time} &nbsp;-&nbsp; ${order.end_time}</span>
         </div>
         <div class="sub-container-25">
           <span>State</span>
           <span>${order.state}</span>
         </div>
         <div class="sub-container-26">
-          <span>Place</span>
-          <span>${order.place}</span>
+          <span>Address</span>
+          <span>${order.address}</span>
         </div>
         <div class="sub-container-27">
           <span>Contact Number</span>
@@ -71,35 +135,22 @@ window.onload = async () => {
         <div class="sub-container-28">
           <span>Guests</span>
           <div class="sub-container-291">
-			<div class="sub-container-2911">
-			${order.guests
-        .map(
-          (g) =>
-            `
-						<div class="user-container">
-							<img
-							src="./assets/images/noProfile.jpg"
-							alt="Customer-Profile"
-							/>
-							<span>@${g.name}</span>
-						</div>
-								`
-        )
-        .join("")}
-			</div>
-			${
-        order.invite === "Pending"
-          ? `
-            <button class="btn btn-outlined" style="margin-top: 16px">
-              Invite
-            </button>
-			`
-          : order.invite === "Sent"
-          ? `
-			<span style="font-size: 12px; color: green; font-weight: bold">&check; &nbsp;Invited</span>
-			`
-          : ""
-      }
+            <div class="sub-container-2911">
+              ${order.guests
+                .map(
+                  (g) =>
+                    `
+                    <div class="user-container">
+                      <img
+                      src="./assets/images/noProfile.jpg"
+                      alt="Customer-Profile"
+                      />
+                      <span>@${g.name}</span>
+                    </div>
+                        `
+                )
+                .join("")}
+            </div>
           </div>
         </div>
 		${
@@ -116,23 +167,6 @@ window.onload = async () => {
       </div>
 	`;
 
-    document.querySelectorAll(".status").forEach((element) => {
-      element.addEventListener("click", async () => {
-        if (element.innerHTML !== order.status) {
-          simpleFetch("/order", "PUT", {
-            oid: params.get("id"),
-            status: element.innerHTML,
-          }).then((res) => {
-            if (res.status === "SUCCESS") {
-              document
-                .querySelector(`.${order.status.toLowerCase()}`)
-                .classList.remove(`order-${order.status.toLowerCase()}`);
-              element.classList.add(`order-${element.innerHTML.toLowerCase()}`);
-              order.status = element.innerHTML;
-            }
-          });
-        }
-      });
-    });
+    updateDOMStatus();
   }
 };

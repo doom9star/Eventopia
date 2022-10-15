@@ -2,15 +2,11 @@ const { Schema, SchemaTypes } = require("mongoose");
 
 const user = new Schema(
   {
-    name: { type: String, unique: true },
-    password: { type: String },
-    avatar: { type: String },
-    invitations: [{ type: SchemaTypes.ObjectId, ref: "invitations" }],
-    // Planner Specifics
+    name: String,
+    avatar: String,
+    password: String,
+    anonymous: Boolean,
     type: { type: String, enum: ["Customer", "Planner"] },
-    events: [{ type: SchemaTypes.ObjectId, ref: "events" }],
-    orders: [{ type: SchemaTypes.ObjectId, ref: "orders" }],
-    anonymous: { type: Boolean },
   },
   { timestamps: true }
 );

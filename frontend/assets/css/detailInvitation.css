@@ -1,0 +1,78 @@
+@import url("./common.css");
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.sub-container-1 {
+  padding: 5%;
+  display: flex;
+  align-items: center;
+}
+
+.sub-container-2 {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  border: 1px solid var(--light-color);
+  margin: auto;
+  padding: 32px;
+}
+
+.sub-container-21 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.invitation-title {
+  font-size: 20px;
+  font-family: monospace;
+  font-weight: bold;
+}
+
+.invitation-inviter {
+  font-size: 12px;
+}
+
+.sub-container-22 {
+  display: flex;
+  justify-content: space-around;
+}
+
+.sub-container-22 > span {
+  border: 1px solid var(--light-color);
+  border-radius: 100px;
+  padding: 8px 24px;
+  margin: 16px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.invitation-state {
+  margin-top: 16px;
+  font-size: 15px;
+  margin-bottom: 4px;
+  font-weight: bold;
+}
+
+.invitation-address {
+  margin-bottom: 32px;
+  font-size: 13px;
+}
+
+.invitation-description {
+  margin-bottom: 16px;
+  font-size: 12px;
+  text-align: center;
+}
+
+.invitation-thumbnail {
+  height: 300px;
+  width: 300px;
+  padding: 16px;
+  align-self: center;
+}

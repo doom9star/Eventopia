@@ -5,11 +5,11 @@ window.onload = async () => {
   if (res.status === "ERROR") {
     window.location.replace("login.html");
   } else if (res.data.type === "Customer") {
-    window.location.replace("home.html");
+    window.location.replace("home.html?tab=events");
   } else {
     container.innerHTML = `
       <div class="sub-container-1">
-        <a class="btn btn-outlined btn-icon" href="/frontend/home.html?tab=orders"><</a>
+        <a class="btn btn-outlined btn-icon" href="javascript:history.back()"><</a>
       </div>
       <div class="sub-container-2">
         <input type="text" name="name" placeholder="Name" autofocus />
@@ -98,7 +98,7 @@ window.onload = async () => {
     };
     simpleFetch("/event", "POST", body).then((res) => {
       if (res.status === "SUCCESS") {
-        window.location.href = "/frontend/home.html" + "?type=" + res.data.type;
+        window.location.href = "home.html?tab=events";
       }
     });
   });

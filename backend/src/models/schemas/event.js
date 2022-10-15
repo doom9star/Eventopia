@@ -2,14 +2,13 @@ const { Schema, SchemaTypes } = require("mongoose");
 
 const event = new Schema(
   {
-    name: { type: String },
-    description: { type: String },
-    images: [{ type: String }],
-    planner: { type: SchemaTypes.ObjectId, ref: "users" },
-    min_price: { type: Number },
-    max_price: { type: Number },
-    states: [{ type: String }],
+    name: String,
+    price: Number,
+    images: [String],
+    states: [String],
+    description: String,
     type: { type: String, enum: ["Online", "Offline"] },
+    planner: { type: SchemaTypes.ObjectId, ref: "users" },
   },
   { timestamps: true }
 );

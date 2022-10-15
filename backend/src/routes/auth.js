@@ -9,16 +9,16 @@ const { COOKIE_NAME, isDev } = require("../constants");
 
 router.post("/register", isNotAuth, async (req, res) => {
   try {
-    const user = new (getUserModel())({
+    const user = await getUserModel().create({
       name: req.body.name,
       password: await bcrypt.hash(req.body.password, 10),
       avatar: req.body.avatar,
       type: req.body.type,
-      states: [],
       anonymous: false,
+      states: [],
       events: [],
+      orders: [],
     });
-    await user.save();
 
     const token = jwt.sign({ uid: user._id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
@@ -30,20 +30,20 @@ router.post("/register", isNotAuth, async (req, res) => {
       secure: !isDev,
     });
 
-    return res.json({ status: "SUCCESS", data: user });
+    return res.json({ status: "SUCCESS", data: { type: user.type } });
   } catch (error) {
     console.error(error);
-    if (error.code === 11000)
-      return res.json({
-        status: "ERROR",
-        data: { name: "username already exists!" },
-      });
-    if (error.code === 11001) {
-      return res.json({
-        status: "ERROR",
-        data: { events: error.message },
-      });
-    }
+    // if (error.code === 11000)
+    //   return res.json({
+    //     status: "ERROR",
+    //     data: { name: "username already exists!" },
+    //   });
+    // if (error.code === 11001) {
+    //   return res.json({
+    //     status: "ERROR",
+    //     data: { events: error.message },
+    //   });
+    // }
     return res.json({ status: "ERROR", data: { message: error.message } });
   }
 });
@@ -51,10 +51,7 @@ router.post("/register", isNotAuth, async (req, res) => {
 router.post("/login", isNotAuth, async (req, res) => {
   try {
     const { name, password } = req.body;
-    const user = await getUserModel()
-      .findOne({ name })
-      .populate("events")
-      .exec();
+    const user = await getUserModel().findOne({ name }).exec();
 
     if (!user) throw new Error("user does not exist!");
     if (!(await bcrypt.compare(password, user.password)))
@@ -70,8 +67,7 @@ router.post("/login", isNotAuth, async (req, res) => {
       secure: !isDev,
     });
 
-    delete user.password;
-    return res.json({ status: "SUCCESS", data: user });
+    return res.json({ status: "SUCCESS", data: { type: user.type } });
   } catch (error) {
     console.error(error);
     return res.json({ status: "ERROR", data: { message: error.message } });

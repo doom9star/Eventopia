@@ -7,8 +7,10 @@ window.onload = async () => {
     window.location.replace("login.html");
     return;
   }
-
   const tab = params.get("tab");
+  let events = [],
+    orders = [],
+    invitations = [];
 
   const header = `
       <div class="sub-container-1">
@@ -29,10 +31,12 @@ window.onload = async () => {
       </div>
   `;
 
-  const events = res.data.events
-    .map(
-      (e) =>
-        `
+  if (tab === "events") {
+    events = await simpleFetch("/event", "GET");
+    events = events.data
+      .map(
+        (e) =>
+          `
           <a class="event-container" href="detailEvent.html?id=${e._id}">
             <img
               src="./assets/images/noThumbnail.png"
@@ -42,17 +46,18 @@ window.onload = async () => {
             <span class="event-name">${e.name}</span>
             <div class="event-sub-container">
               <span class="event-planner-name">@${e.planner.name}</span>
-              <span>₹ ${e.min_price.toLocaleString()}</span>
+              <span>₹ ${e.price.toLocaleString()}</span>
             </div>
           </a>
         `
-    )
-    .join("");
-
-  const orders = res.data.orders
-    .map(
-      (o) =>
-        `
+      )
+      .join("");
+  } else if (tab === "orders") {
+    orders = await simpleFetch("/order/many/" + res.data.type, "GET");
+    orders = orders.data
+      .map(
+        (o) =>
+          `
       <a class="order-container" href="${
         res.data.type === "Planner"
           ? `detailOrder.html?id=${o._id}`
@@ -73,40 +78,44 @@ window.onload = async () => {
             <span class="order-timestamp">${new Date(
               o.createdAt
             ).toLocaleDateString()} <span style="font-size: 20px;"> | </span> ${new Date(
-          o.createdAt
-        ).toLocaleTimeString()}</span>
+            o.createdAt
+          ).toLocaleTimeString()}</span>
             <span class="order-status order-${o.status.toLowerCase()}">${
-          o.status
-        }</span>
+            o.status
+          }</span>
       </a>
      `
-    )
-    .join("");
-
-  const invitations = res.data.invitations
-    .map(
-      (i) =>
-        `
-      <a class="invitation-container" href="javascript:;">
-            <span class="invitation-id">${i._id}</span>
-            <div class="invitation-sub-container">
-              <img
-                src="./assets/images/noThumbnail.png"
-                alt="Invitation-Thumbnail"
-                class="invitation-event-thumbnail"
-              />
-              <span class="invitation-event-name">${i.event.name}</span>
-            </div>
-            <span class="invitation-sender">@${i.inviter.name}</span>
-            <span class="order-timestamp">${new Date(
-              i.createdAt
-            ).toLocaleDateString()} <span style="font-size: 20px;"> | </span> ${new Date(
-          i.createdAt
-        ).toLocaleTimeString()}</span>
-      </a>
+      )
+      .join("");
+  } else if (tab === "invitations") {
+    invitations = await simpleFetch("/invitation", "GET");
+    invitations = invitations.data
+      .map(
+        (i) =>
+          `
+            <a class="invitation-container" href="detailInvitation.html?id=${
+              i._id
+            }">
+                  <span class="invitation-id">${i._id}</span>
+                  <div class="invitation-sub-container">
+                    <img
+                      src="./assets/images/noThumbnail.png"
+                      alt="Invitation-Thumbnail"
+                      class="invitation-event-thumbnail"
+                    />
+                    <span class="invitation-event-name">${i.event.name}</span>
+                  </div>
+                  <span class="invitation-sender">@${i.inviter.name}</span>
+                  <span class="order-timestamp">${new Date(
+                    i.createdAt
+                  ).toLocaleDateString()} <span style="font-size: 20px;"> | </span> ${new Date(
+            i.createdAt
+          ).toLocaleTimeString()}</span>
+            </a>
     `
-    )
-    .join("");
+      )
+      .join("");
+  }
 
   container.innerHTML = `
       ${header}
@@ -115,24 +124,24 @@ window.onload = async () => {
           <div class="sub-container-211">
             <a
               class="tab order-tab ${tab === "orders" && "active-tab"}"
-              href="/frontend/home.html?tab=orders"
+              href="home.html?tab=orders"
               >Orders</a
             >
             <a class="tab event-tab ${
               tab === "events" && "active-tab"
-            }" href="/frontend/home.html?tab=events"
+            }" href="home.html?tab=events"
               >Events</a
             >
             <a class="tab invitation-tab ${
               tab === "invitations" && "active-tab"
-            }" href="/frontend/home.html?tab=invitations"
+            }" href="home.html?tab=invitations"
               >Invitations</a
             >
           </div>
           ${
             res.data.type === "Planner"
               ? `
-          <a class="btn btn-filled" href="/frontend/newEvent.html"
+          <a class="btn btn-filled" href="newEvent.html"
             >+ New Event</a
           >
             `
@@ -143,16 +152,18 @@ window.onload = async () => {
           ${
             tab === "orders"
               ? `
-        <div class="sub-container-orders">
-          <div class="order-container-header">
-            <span>Order ID</span>
-            <span>Event</span>
-            <span>Planner</span>
-            <span>Date/Time</span>
-            <span>Status</span>
-          </div>
-          ${orders}
-        </div>
+                  <div class="sub-container-orders">
+                    <div class="order-container-header">
+                      <span>Order ID</span>
+                      <span>Event</span>
+                      <span>${
+                        res.data.type === "Customer" ? "Planner" : "Customer"
+                      }</span>
+                      <span>Date/Time</span>
+                      <span>Status</span>
+                    </div>
+                    ${orders}
+                  </div>
           `
               : ""
           }
@@ -170,15 +181,15 @@ window.onload = async () => {
           ${
             tab === "invitations"
               ? `
-        <div class="sub-container-invitations">
-          <div class="invitation-container-header">
-            <span>Invitation ID</span>
-            <span>Event</span>
-            <span>Inviter</span>
-            <span>Date/Time</span>
-          </div>
-        </div>
-          ${invitations}
+                  <div class="sub-container-invitations">
+                    <div class="invitation-container-header">
+                      <span>Invitation ID</span>
+                      <span>Event</span>
+                      <span>Inviter</span>
+                      <span>Date/Time</span>
+                    </div>
+                  </div>
+                  ${invitations}
           `
               : ""
           }
