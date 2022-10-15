@@ -141,10 +141,14 @@ window.onload = async () => {
         event: event.data._id,
         guests: guests.map((g) => g._id),
         date: document.querySelector("input[name='date']").value,
-        start_time: document.querySelector("input[name='start_time']").value,
-        end_time: document.querySelector("input[name='end_time']").value,
-        state: document.querySelector("select").value,
-        address: document.querySelector("input[name='address']").value,
+        time: `${
+          document.querySelector("input[name='start_time']").value
+        } &nbsp;-&nbsp; ${
+          document.querySelector("input[name='end_time']").value
+        }`,
+        address: `${
+          document.querySelector("input[name='address']").value
+        } &nbsp;|&nbsp; ${document.querySelector("select").value}`,
         contact: document.querySelector("input[name='contact']").value,
         info: document.querySelector("textarea").value,
         invite:

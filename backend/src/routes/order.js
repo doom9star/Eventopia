@@ -66,9 +66,7 @@ router
     try {
       const order = await getOrderModel()
         .findOne({ _id: req.params.id })
-        .select(
-          "date start_time end_time state address contact info invite status"
-        )
+        .select("date time address contact info invite status")
         .populate({
           path: "customer",
           select: "name avatar",

@@ -10,7 +10,7 @@ router
     try {
       const invitations = await getInvitationModel()
         .find({ invitee: req.uid })
-        .select("createdAt")
+        .select("createdAt read")
         .populate({
           path: "event",
           select: "name images",
@@ -30,24 +30,20 @@ router
   .post(async (req, res) => {
     try {
       const { oid } = req.body;
-      const order = await getOrderModel()
-        .findOne({ _id: oid })
-        .populate("event")
-        .exec();
+      const order = await getOrderModel().findOne({ _id: oid }).exec();
 
       for (const guest of order.guests) {
         await getInvitationModel().create({
           inviter: order.customer,
-          event: order.event._id,
+          event: order.event,
           invitee: guest,
-          title: `${order.event.name} Invitation`,
           description:
             "Once there, click on the Fork button in the top-right corner. This creates a new copy of my demo repo under your GitHub user account with a URL like:",
           date: order.date,
-          start_time: order.start_time,
-          end_time: order.end_time,
+          time: order.time,
           state: order.state,
           address: order.address,
+          read: false,
         });
       }
       order.invite = "Sent";
@@ -64,7 +60,7 @@ router.get("/:id", isAuth, async (req, res) => {
   try {
     const invitation = await getInvitationModel()
       .findOne({ _id: req.params.id })
-      .select("date read state address start_time end_time description")
+      .select("date read address time description")
       .populate({
         path: "event",
         select: "name images",
@@ -74,6 +70,10 @@ router.get("/:id", isAuth, async (req, res) => {
         select: "name avatar",
       })
       .exec();
+    if (!invitation.read) {
+      invitation.read = true;
+      await invitation.save();
+    }
     return res.json({ status: "SUCCESS", data: invitation });
   } catch (error) {
     console.error(error);

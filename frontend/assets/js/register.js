@@ -27,8 +27,8 @@ window.onload = async () => {
             <label for="planner">Planner</label>
           </div>
         </div>
-        <input type="password" placeholder="Password" />
-        <input type="password" placeholder="Confirm Password" />
+        <input type="password" placeholder="Password" name="password"/>
+        <input type="password" placeholder="Confirm Password" name="confirmPassword"/>
         <button class="btn btn-filled">Register</button>
       </div>
     `;
@@ -39,7 +39,9 @@ window.onload = async () => {
   btnRegister.addEventListener("click", () => {
     simpleFetch("/auth/register", "POST", {
       name: document.querySelector('input[type="text"]').value,
-      password: document.querySelector('input[type="password"]').value,
+      password: document.querySelector('input[name="password"]').value,
+      confirmPassword: document.querySelector("input[name='confirmPassword']")
+        .value,
       type: document.querySelector('input[name="type"]:checked').value,
     }).then((res) => {
       if (res.status === "SUCCESS") {
@@ -47,6 +49,8 @@ window.onload = async () => {
           "home.html?tab=" +
             (res.data.type === "Customer" ? "events" : "orders")
         );
+      } else {
+        alertError(res.data.message);
       }
     });
   });

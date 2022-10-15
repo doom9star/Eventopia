@@ -30,6 +30,8 @@ window.onload = async () => {
           "home.html?tab=" +
             (res.data.type === "Customer" ? "events" : "orders")
         );
+      } else {
+        alertError(res.data.message);
       }
     });
   });

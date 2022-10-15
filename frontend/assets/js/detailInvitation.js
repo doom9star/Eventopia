@@ -18,8 +18,12 @@ window.onload = async () => {
       </div>
       <div class="sub-container-2">
         <div class="sub-container-21">
-          <span class="invitation-title">⚙| &nbsp;${invitation.data.event.name}</span>
-          <span class="invitation-inviter">@${invitation.data.inviter.name}</span>
+          <span class="invitation-title">⚙| &nbsp;${
+            invitation.data.event.name
+          }</span>
+          <span class="invitation-inviter">@${
+            invitation.data.inviter.name
+          }</span>
         </div>
         <img
           src="./assets/images/noThumbnail.png"
@@ -28,12 +32,18 @@ window.onload = async () => {
         />
         <div class="sub-container-22">
           <span>${invitation.data.date}</span>
-          <span>${invitation.data.start_time} - ${invitation.data.end_time}</span>
+          <span>${invitation.data.time}</span>
         </div>
-        <span class="invitation-state">${invitation.data.state}</span>
-        <span class="invitation-address">${invitation.data.address}</span
+        <span class="invitation-state">${
+          invitation.data.address.split("|")[1]
+        }</span>
+        <span class="invitation-address">${
+          invitation.data.address.split("|")[0]
+        }</span
         >
-        <span class="invitation-description">${invitation.data.description}</span
+        <span class="invitation-description">${
+          invitation.data.description
+        }</span
         >
       </div>
       <div style="padding-top: 32px"></div>

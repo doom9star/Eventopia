@@ -118,15 +118,15 @@ window.onload = async () => {
         </div>
         <div class="sub-container-24">
           <span>Time</span>
-          <span>${order.start_time} &nbsp;-&nbsp; ${order.end_time}</span>
+          <span>${order.time}</span>
         </div>
         <div class="sub-container-25">
           <span>State</span>
-          <span>${order.state}</span>
+          <span>${order.address.split("|")[1]}</span>
         </div>
         <div class="sub-container-26">
           <span>Address</span>
-          <span>${order.address}</span>
+          <span>${order.address.split("|")[0]}</span>
         </div>
         <div class="sub-container-27">
           <span>Contact Number</span>

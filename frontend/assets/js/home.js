@@ -111,6 +111,11 @@ window.onload = async () => {
                   ).toLocaleDateString()} <span style="font-size: 20px;"> | </span> ${new Date(
             i.createdAt
           ).toLocaleTimeString()}</span>
+                  ${
+                    !i.read
+                      ? "<span class='order-rejected' style='padding: 2px 8px; border-radius: 100px;'>new</span>"
+                      : "<span></span>"
+                  }
             </a>
     `
       )

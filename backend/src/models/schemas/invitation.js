@@ -3,12 +3,9 @@ const { Schema, SchemaTypes } = require("mongoose");
 const invitation = new Schema(
   {
     date: String,
-    title: String,
+    time: String,
     read: Boolean,
-    state: String,
     address: String,
-    end_time: String,
-    start_time: String,
     description: String,
     event: { type: SchemaTypes.ObjectId, ref: "events" },
     inviter: { type: SchemaTypes.ObjectId, ref: "users" },

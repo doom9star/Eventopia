@@ -4,11 +4,9 @@ const order = new Schema(
   {
     date: String,
     info: String,
-    state: String,
+    time: String,
     address: String,
     contact: Number,
-    end_time: String,
-    start_time: String,
     expiry_date: String,
     event: { type: SchemaTypes.ObjectId, ref: "events" },
     planner: { type: SchemaTypes.ObjectId, ref: "users" },

@@ -1,11 +1,10 @@
-const { Schema, SchemaTypes } = require("mongoose");
+const { Schema } = require("mongoose");
 
 const user = new Schema(
   {
-    name: String,
+    name: { type: String, unique: true },
     avatar: String,
     password: String,
-    anonymous: Boolean,
     type: { type: String, enum: ["Customer", "Planner"] },
   },
   { timestamps: true }

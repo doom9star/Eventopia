@@ -109,6 +109,35 @@ label {
   color: white;
 }
 
+.error-container {
+  background-color: rgb(235, 55, 55);
+  padding: 10px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  width: 100vw;
+  animation: slideDown 200ms ease-in-out;
+}
+
+.error-container > span {
+  color: white;
+  font-size: 12px;
+  font-family: monospace;
+  padding: 0px 16px;
+}
+
 ::-webkit-scrollbar {
   display: none;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    top: -50px;
+  }
+  to {
+    opacity: 1;
+    top: 0px;
+  }
 }
