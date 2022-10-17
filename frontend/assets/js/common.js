@@ -1,4 +1,4 @@
-const BACKEND_URL = "http://localhost:5000";
+const BACKEND_URL = "https://young-headland-78518.herokuapp.com";
 
 function alertError(message) {
   if (document.querySelector(".error-container")) {

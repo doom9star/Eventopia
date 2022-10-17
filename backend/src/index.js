@@ -19,7 +19,9 @@ const main = async () => {
 
   app.use(
     cors({
-      origin: "http://localhost:5500",
+      origin: !isDev
+        ? "https://eventopia-sjc.netlify.app"
+        : "http://localhost:5500",
       credentials: true,
     })
   );
