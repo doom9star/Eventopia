@@ -22,6 +22,11 @@ router.put("/", isAuth, async (req, res) => {
     return res.json({ status: "SUCCESS", data: null });
   } catch (error) {
     console.error(error);
+    if (error.code === 11000)
+      return res.json({
+        status: "ERROR",
+        data: { message: "username already exists!" },
+      });
     return res.json({ status: "ERROR", data: { message: error.message } });
   }
 });

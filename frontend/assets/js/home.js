@@ -273,6 +273,8 @@ window.onload = async () => {
       simpleFetch("/user", "PUT", body).then((_res) => {
         if (_res.status === "SUCCESS") {
           window.location.reload();
+        } else {
+          alertError(_res.data.message);
         }
       });
     }
