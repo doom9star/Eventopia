@@ -19,12 +19,22 @@ router.post("/", isAuth, async (req, res) => {
 
 router.get("/many/:type", isAuth, async (req, res) => {
   try {
+    const today = new Date();
+    await getOrderModel().deleteMany({
+      $or: [{ status: "Ordered" }, { status: "Seen" }],
+      expiry_date: {
+        $lte: `${today.getFullYear()}-${
+          today.getMonth() + 1
+        }-${today.getDate()}`,
+      },
+    });
+
     const orders = await getOrderModel()
       .find({ [req.params.type.toLowerCase()]: req.uid })
       .select("createdAt status")
       .populate({
         path: "event",
-        select: "name images",
+        select: "name thumbnail",
       })
       .populate({
         path: req.params.type === "Customer" ? "planner" : "customer",
@@ -41,16 +51,6 @@ router.get("/many/:type", isAuth, async (req, res) => {
         }
       }
     }
-
-    const today = new Date();
-    await getOrderModel().deleteMany({
-      $or: [{ status: "Ordered" }, { status: "Seen" }],
-      expiry_date: {
-        $lte: `${today.getFullYear()}-${
-          today.getMonth() + 1
-        }-${today.getDate()}`,
-      },
-    });
 
     return res.json({ status: "SUCCESS", data: orders });
   } catch (error) {

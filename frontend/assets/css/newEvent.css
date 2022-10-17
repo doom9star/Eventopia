@@ -18,8 +18,10 @@
   align-self: center;
 }
 
-.sub-container-21 {
+.sub-container-23 {
   display: flex;
+  justify-content: flex-end;
+  margin: 16px;
 }
 
 .create-btn {
@@ -28,4 +30,26 @@
 
 .back-btn {
   font-size: 16px;
+}
+
+.event-thumbnail-container {
+  position: relative;
+  border: 1px solid var(--light-color);
+}
+
+.event-thumbnail-container img {
+  width: 100px;
+  height: 100px;
+}
+
+.event-thumbnail-container span {
+  cursor: pointer;
+  position: absolute;
+  right: -5%;
+  top: -3%;
+  background-color: var(--prim-color);
+  color: white;
+  font-size: 10px;
+  border-radius: 100%;
+  padding: 2px 6px;
 }

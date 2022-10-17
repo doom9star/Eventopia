@@ -13,7 +13,7 @@ router
         .select("createdAt read")
         .populate({
           path: "event",
-          select: "name images",
+          select: "name thumbnail",
         })
         .populate({
           path: "inviter",
@@ -63,7 +63,7 @@ router.get("/:id", isAuth, async (req, res) => {
       .select("date read address time description")
       .populate({
         path: "event",
-        select: "name images",
+        select: "name thumbnail",
       })
       .populate({
         path: "inviter",

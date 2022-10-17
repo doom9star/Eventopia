@@ -14,7 +14,14 @@ window.onload = async () => {
         <a class="btn btn-outlined btn-icon" href="javascript:history.back()"><</a>
       </div>
       <div class="sub-container-2">
-        <img src="./assets/images/noThumbnail.png" alt="Event-Thumbnail" />
+        <div>
+          <img src=${
+            event.data.thumbnail
+              ? event.data.thumbnail
+              : "./assets/images/noThumbnail.png"
+          } alt="Event-Thumbnail" />
+          <div class="overlay"></div>
+        </div>
         <div class="sub-container-21">
           <span>${event.data.name}</span>
           <span>@${event.data.planner.name}</span>
@@ -146,9 +153,9 @@ window.onload = async () => {
         } &nbsp;-&nbsp; ${
           document.querySelector("input[name='end_time']").value
         }`,
-        address: `${
-          document.querySelector("input[name='address']").value
-        } &nbsp;|&nbsp; ${document.querySelector("select").value}`,
+        address: `${document.querySelector("input[name='address']").value} | ${
+          document.querySelector("select").value
+        }`,
         contact: document.querySelector("input[name='contact']").value,
         info: document.querySelector("textarea").value,
         invite:

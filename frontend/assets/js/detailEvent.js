@@ -18,7 +18,11 @@ window.onload = async () => {
       </div>
       <div class="sub-container-2">
         <div class="sub-container-21">
-          <img src="./assets/images/noThumbnail.png" alt="Event-Thumbnail" />
+          <img src=${
+            event.data.thumbnail
+              ? event.data.thumbnail
+              : "./assets/images/noThumbnail.png"
+          } alt="Event-Thumbnail" />
         </div>
         <div class="sub-container-22">
           <div class="sub-container-221">

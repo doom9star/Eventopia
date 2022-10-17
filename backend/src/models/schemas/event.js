@@ -4,7 +4,7 @@ const event = new Schema(
   {
     name: String,
     price: Number,
-    images: [String],
+    thumbnail: String,
     states: [String],
     description: String,
     type: { type: String, enum: ["Online", "Offline"] },

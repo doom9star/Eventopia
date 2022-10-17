@@ -20,6 +20,19 @@ function alertError(message) {
   }
 }
 
+async function getImageURI(image) {
+  return new Promise((res, rej) => {
+    const reader = new FileReader();
+    reader.onload = ({ target }) => {
+      res(target.result);
+    };
+    reader.onerror = () => {
+      rej();
+    };
+    reader.readAsDataURL(image);
+  });
+}
+
 async function simpleFetch(path, method, body = {}) {
   return fetch(BACKEND_URL + path, {
     method: method,

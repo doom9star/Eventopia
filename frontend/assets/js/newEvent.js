@@ -12,6 +12,10 @@ window.onload = async () => {
         <a class="btn btn-outlined btn-icon" href="javascript:history.back()"><</a>
       </div>
       <div class="sub-container-2">
+        <input type="file" hidden accept="image/*" class="file-input"/>
+        <div class="sub-container-23">
+          <button class="btn btn-outlined upload-btn">Upload</button>
+        </div>
         <input type="text" name="name" placeholder="Name" autofocus />
         <textarea
           rows="8"
@@ -23,32 +27,20 @@ window.onload = async () => {
               type="radio"
               id="online"
               name="type"
-              value="online"
-              checked
+              value="Online"
             />
             <label for="online">Online</label>
           </div>
           <div class="radio">
-            <input type="radio" id="offline" name="type" value="offline" />
+            <input type="radio" id="offline" name="type" value="Offline" checked/>
             <label for="offline">Offline</label>
           </div>
         </div>
-        <div class="sub-container-21">
-          <input
-            type="number"
-            name="min_price"
-            placeholder="Minimum Price (₹)"
-            autofocus
-            style="margin-right: 10px; width: 40%"
-          />
-          <input
-            type="number"
-            name="max_price"
-            placeholder="Maximum Price (₹)"
-            autofocus
-            style="width: 40%"
-          />
-        </div>
+        <input
+          type="number"
+          name="price"
+          placeholder="Price (₹)"
+        />
         <div class="sub-container-22">
           <div class="sub-container-221">
             <input type="text" placeholder="State" style="width: 30%" />
@@ -62,8 +54,12 @@ window.onload = async () => {
   }
 
   const subContainer4 = document.querySelector(".sub-container-22");
+  const subContainer23 = document.querySelector(".sub-container-23");
+
   const btnCreate = document.querySelector(".create-btn");
   const btnAdd = document.querySelector(".add-btn");
+
+  const fileInput = document.querySelector(".file-input");
 
   btnAdd.addEventListener("click", () => {
     const div = document.createElement("div");
@@ -86,10 +82,10 @@ window.onload = async () => {
   btnCreate.addEventListener("click", () => {
     const body = {
       name: document.querySelector("input[name='name']").value,
+      thumbnail: document.querySelector("img")?.src || "",
       description: document.querySelector("textarea").value,
       type: document.querySelector("input[name='type']:checked").value,
-      min_price: document.querySelector("input[name='min_price']").value,
-      max_price: document.querySelector("input[name='max_price']").value,
+      price: document.querySelector("input[name='price']").value,
       states: Array.from(document.querySelectorAll(".sub-container-221")).map(
         (sc5) => {
           return `${sc5.children[0].value}, ${sc5.children[1].value}`;
@@ -100,6 +96,33 @@ window.onload = async () => {
       if (res.status === "SUCCESS") {
         window.location.href = "home.html?tab=events";
       }
+    });
+  });
+
+  document.querySelector(".upload-btn").addEventListener("click", () => {
+    fileInput.click();
+  });
+
+  fileInput.addEventListener("change", (e) => {
+    getImageURI(e.target.files[0]).then((uri) => {
+      subContainer23.innerHTML = `
+        <div class="event-thumbnail-container">
+          <img src="${uri}" alt="Event-Thumbnail" />
+          <span class="delete-thumbnail-btn">x</span>
+        </div>
+      `;
+      document
+        .querySelector(".delete-thumbnail-btn")
+        .addEventListener("click", () => {
+          subContainer23.innerHTML = `
+          <button class="btn btn-outlined upload-btn">Upload</button>
+        `;
+          document
+            .querySelector(".upload-btn")
+            .addEventListener("click", () => {
+              fileInput.click();
+            });
+        });
     });
   });
 };

@@ -10,7 +10,7 @@ router
     try {
       const events = await getEventModel()
         .find({})
-        .select("name images price")
+        .select("name thumbnail price")
         .populate({ path: "planner", select: "name" })
         .exec();
       return res.json({ status: "SUCCESS", data: events });
@@ -40,7 +40,7 @@ router
     try {
       const event = await getEventModel()
         .findOne({ _id: req.params.id })
-        .select("name price type images description states")
+        .select("name price type thumbnail description states")
         .populate({ path: "planner", select: "name" })
         .exec();
       return res.json({ status: "SUCCESS", data: event });

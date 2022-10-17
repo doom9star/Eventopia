@@ -122,7 +122,7 @@ window.onload = async () => {
         </div>
         <div class="sub-container-25">
           <span>State</span>
-          <span>${order.address.split("|")[1]}</span>
+          <span>${order.address.split("|")[1].trim()}</span>
         </div>
         <div class="sub-container-26">
           <span>Address</span>

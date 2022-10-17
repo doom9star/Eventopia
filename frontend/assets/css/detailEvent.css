@@ -28,6 +28,7 @@
 
 .sub-container-21 img {
   width: 80%;
+  border-radius: 10px;
 }
 
 .sub-container-22 {
@@ -83,6 +84,7 @@
 .sub-container-223 {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   margin-top: 20px;
 }
 

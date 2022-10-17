@@ -19,13 +19,13 @@ const main = async () => {
 
   app.use(
     cors({
-      origin: [process.env.FRONTEND, "https://doom9star.github.io"],
+      origin: process.env.FRONTEND,
       credentials: true,
     })
   );
   app.use(morgan("dev"));
   app.use(cookieParser());
-  app.use(express.json());
+  app.use(express.json({ limit: "50mb" }));
   app.use("/", MainRouter);
 
   app.listen(process.env.PORT, () => {
