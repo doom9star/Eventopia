@@ -19,7 +19,7 @@ const main = async () => {
 
   app.use(
     cors({
-      origin: process.env.FRONTEND,
+      origin: "http://localhost:5500",
       credentials: true,
     })
   );
