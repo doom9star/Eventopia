@@ -1,4 +1,4 @@
 # Eventopia
 
-#### | Live
+#### | Live |
 https://eventopia-sjc.netlify.app
