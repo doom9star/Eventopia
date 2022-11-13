@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 const isAuth = require("../middlewares/isAuth");
-const { getEventModel, getUserModel } = require("../models");
+const { getEventModel } = require("../models");
 
 router
   .route("/")
@@ -21,6 +21,15 @@ router
   })
   .post(async (req, res) => {
     try {
+      if (req.body.price <= 0) throw new Error("Price must be greater than 0!");
+      if (
+        await getEventModel().findOne({
+          name: { $regex: ".*" + req.body.name + ".*" },
+          planner: req.uid,
+        })
+      ) {
+        throw new Error("Event already exists!");
+      }
       const event = await getEventModel().create({
         ...req.body,
         planner: req.uid,

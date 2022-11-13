@@ -85,7 +85,7 @@ window.onload = async () => {
       thumbnail: document.querySelector("img")?.src || "",
       description: document.querySelector("textarea").value,
       type: document.querySelector("input[name='type']:checked").value,
-      price: document.querySelector("input[name='price']").value,
+      price: parseInt(document.querySelector("input[name='price']").value) || 0,
       states: Array.from(document.querySelectorAll(".sub-container-221")).map(
         (sc5) => {
           return `${sc5.children[0].value}, ${sc5.children[1].value}`;
@@ -95,6 +95,8 @@ window.onload = async () => {
     simpleFetch("/event", "POST", body).then((res) => {
       if (res.status === "SUCCESS") {
         window.location.href = "home.html?tab=events";
+      } else {
+        alertError(res.data.message);
       }
     });
   });

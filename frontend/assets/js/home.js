@@ -50,7 +50,7 @@ window.onload = async () => {
             <span class="event-name">${e.name}</span>
             <div class="event-sub-container">
               <span class="event-planner-name">@${e.planner.name}</span>
-              <span>₹ ${e.price.toLocaleString()}</span>
+              <span>₹ ${(e.price || 10).toLocaleString()}</span>
             </div>
           </a>
         `
