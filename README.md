@@ -2,7 +2,7 @@
 
 <img src="/frontend/assets/images/logo.png" alt="eventopia-logo" style="width:250px;height:200px"/>
 Planning an event is a monotonous task. Some of the caveats include:
-<br>
+<br />
 <ul>
   <li>Inadequate Budget</li>
   <li>Venue Selection</li>
