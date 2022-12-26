@@ -2,15 +2,17 @@
 
 <img src="/frontend/assets/images/logo.png" alt="eventopia-logo" style="width:250px;height:200px"/>
 Planning an event is a monotonous task. Some of the caveats include:
-  - Inadequate Budget
-● Venue Selection
-● Inviting Guests
-● Transportation
-● Time Constraint
-● Theme / Design
-● Technology
-● Weather Fluctuation
-● Food, etc
+<ul>
+  <li>Inadequate Budget</li>
+  <li>Venue Selection</li>
+  <li>Inviting Guests</li>
+  <li>Transportation</li>
+  <li>Time Constraint</li>
+  <li>Theme / Design</li>
+  <li>Technology</li>
+  <li>Weather Fluctuation</li>
+  <li>Food, etc</li>
+</ul>
 Inferior planning could possibly escalate the probability of occurrence of unexpected
 behaviors during the event. This is where our product ‘Eventopia’ comes to the
 rescue.
