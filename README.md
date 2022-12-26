@@ -1,3 +1,3 @@
 # Eventopia
 
-![eventopia-logo](/frontend/assets/images/logo.png)
+<img src="/frontend/assets/images/logo.png" alt="eventopia-logo" style="width:200px;"/>
