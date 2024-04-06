@@ -1,4 +1,4 @@
-const BACKEND_URL = "http://localhost:4000";
+const BACKEND_URL = "https://eventopia-backend-xi.vercel.app/";
 
 function alertError(message) {
   if (document.querySelector(".error-container")) {

@@ -31,6 +31,8 @@ const main = async () => {
   app.listen(process.env.PORT, () => {
     console.log(`server has started running on PORT-[${process.env.PORT}]\n`);
   });
+
+  module.exports = app;
 };
 
 main();
