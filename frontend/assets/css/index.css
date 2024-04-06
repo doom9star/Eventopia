@@ -40,7 +40,8 @@
 }
 
 .sub-title {
-  font-family: fantasy;
+  font-family: monospace;
+  font-weight: bold;
 }
 
 .sub-container-21 {

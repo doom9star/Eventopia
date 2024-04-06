@@ -29,9 +29,7 @@ const main = async () => {
   app.use("/", MainRouter);
 
   app.listen(process.env.PORT, () => {
-    console.log(
-      `Web-Server has started running on PORT-[${process.env.PORT}]\n`
-    );
+    console.log(`server has started running on PORT-[${process.env.PORT}]\n`);
   });
 };
 
