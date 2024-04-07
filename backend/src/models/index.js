@@ -34,7 +34,7 @@ const connectDB = async () => {
         OrderModel = mongoose.model("orders", OrderSchema);
         EventModel = mongoose.model("events", EventSchema);
         InvitationModel = mongoose.model("invitations", InvitationSchema);
-        console.log("\nMongoDB-Atlas connected successfully!");
+        console.log("\nmongoDB-atlas connected successfully!");
         res();
       })
       .catch((err) => rej(err))

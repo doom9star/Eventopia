@@ -7,32 +7,25 @@ const morgan = require("morgan");
 
 const { connectDB } = require("./models");
 const MainRouter = require("./routes/index");
-const { isDev } = require("./constants");
 
-const main = async () => {
-  dotenv.config({ path: path.join(__dirname, "../.env") });
+dotenv.config({ path: path.join(__dirname, "../.env") });
+const app = express();
 
-  await connectDB();
+app.use(
+  cors({
+    origin: process.env.FRONTEND,
+    credentials: true,
+  })
+);
+app.use(morgan("dev"));
+app.use(cookieParser());
+app.use(express.json({ limit: "50mb" }));
+app.use("/", MainRouter);
 
-  const app = express();
-  app.set("trust proxy", !isDev);
-
-  app.use(
-    cors({
-      origin: process.env.FRONTEND,
-      credentials: true,
-    })
-  );
-  app.use(morgan("dev"));
-  app.use(cookieParser());
-  app.use(express.json({ limit: "50mb" }));
-  app.use("/", MainRouter);
-
+connectDB().then(() => {
   app.listen(process.env.PORT, () => {
-    console.log(`server has started running on PORT-[${process.env.PORT}]\n`);
+    console.log(`server has started running!`);
   });
+});
 
-  module.exports = app;
-};
-
-main();
+module.exports = app;
